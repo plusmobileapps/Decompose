@@ -7,6 +7,7 @@ import com.arkivanov.decompose.router.RouterEntryFactoryImpl
 import com.arkivanov.decompose.router.RouterImpl
 import com.arkivanov.decompose.router.StackHolderImpl
 import com.arkivanov.decompose.router.StackNavigatorImpl
+import com.arkivanov.decompose.router.StackSaverImpl
 import com.arkivanov.decompose.statekeeper.Parcelable
 import com.arkivanov.decompose.statekeeper.ParcelableContainer
 import com.arkivanov.decompose.statekeeper.StateKeeper
@@ -24,6 +25,7 @@ internal class DefaultRouterFactory(
         initialBackStack: () -> List<C>,
         configurationClass: KClass<out C>,
         key: String,
+        onRestoreStack: (List<C>) -> List<C>?,
         handleBackButton: Boolean,
         componentFactory: (configuration: C, ComponentContext) -> T
     ): Router<C, T> {
@@ -36,13 +38,16 @@ internal class DefaultRouterFactory(
             stackHolder = StackHolderImpl(
                 initialConfiguration = initialConfiguration,
                 initialBackStack = initialBackStack,
-                configurationClass = configurationClass,
                 lifecycle = lifecycle,
                 key = key,
-                stateKeeper = stateKeeper,
+                stackSaver = StackSaverImpl(
+                    configurationClass = configurationClass,
+                    stateKeeper = stateKeeper,
+                    onRestoreStack = onRestoreStack,
+                    parcelableContainerFactory = ::ParcelableContainer
+                ),
                 instanceKeeper = instanceKeeper,
-                routerEntryFactory = routerEntryFactory,
-                parcelableContainerFactory = ::ParcelableContainer
+                routerEntryFactory = routerEntryFactory
             ),
             navigator = StackNavigatorImpl(routerEntryFactory = routerEntryFactory)
         )
