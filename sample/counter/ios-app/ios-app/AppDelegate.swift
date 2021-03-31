@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Counter
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -32,6 +33,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
     }
 
-
+    func application(_ application: UIApplication,
+                     shouldSaveApplicationState coder: NSCoder) -> Bool {
+        NSLog("save")
+        coder.encode(FooKt.foo(some: 3), forKey: "asd")
+        return true
+    }
+    
+    func application(_ application: UIApplication, shouldRestoreApplicationState coder: NSCoder) -> Bool {
+        FooKt.foo(some: 2)
+        
+        NSLog("restore")
+        let a = coder.decodeObject(forKey: "asd")
+        NSLog(a.debugDescription)
+        if (a is NSObject) {
+        FooKt.bar(a: a as! NSObject)
+        }
+        return true
+    }
 }
 
