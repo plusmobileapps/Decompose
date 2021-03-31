@@ -9,10 +9,9 @@
 import UIKit
 import Counter
 
-@UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-
+    var stateKeeper: StateKeeperDispatcher = StateKeeperDispatcherKt.StateKeeperDispatcher(savedState: nil)
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -35,21 +34,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication,
                      shouldSaveApplicationState coder: NSCoder) -> Bool {
-        NSLog("save")
-        coder.encode(FooKt.foo(some: 3), forKey: "asd")
+        coder.encode(stateKeeper.save()?.asHolder(), forKey: "state")
         return true
     }
     
     func application(_ application: UIApplication, shouldRestoreApplicationState coder: NSCoder) -> Bool {
-        FooKt.foo(some: 2)
-        
-        NSLog("restore")
-        let a = coder.decodeObject(forKey: "asd")
-        NSLog(a.debugDescription)
-        if (a is NSObject) {
-        FooKt.bar(a: a as! NSObject)
-        }
+        let state = ParcelableKt.getValue(coder: coder, key: "state")
+        self.stateKeeper = StateKeeperDispatcherKt.StateKeeperDispatcher(savedState: state)
         return true
     }
 }
-

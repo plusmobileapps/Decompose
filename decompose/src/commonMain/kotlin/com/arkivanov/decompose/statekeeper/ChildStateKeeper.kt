@@ -39,9 +39,9 @@ internal class ChildStateKeeper(
 
     @Parcelize
     private class SavedState(val map: MutableMap<String, Parcelable>) : Parcelable {
-        override fun asHolder(): ParcelableHolder = Holder(this)
+        override fun asHolder(): NSCodingProtocol = Holder(this)
 
-        private class Holder(override val value: SavedState): NSObject(), ParcelableHolder {
+        @ExportObjCClass("Holder6") private class Holder(private val value: SavedState): NSObject(), NSCodingProtocol {
             override fun encodeWithCoder(coder: NSCoder) {
                 coder.encodeInt_(value.map.size, "size")
                 value.map.entries.forEachIndexed { index, entry ->
@@ -50,7 +50,7 @@ internal class ChildStateKeeper(
                 }
             }
 
-            override fun initWithCoder(coder: NSCoder): Holder {
+            override fun initWithCoder(coder: NSCoder): ValueHolder {
                 val size = coder.decodeIntForKey_("size")
                 val map = HashMap<String, Parcelable>()
                 repeat(size) {
@@ -59,7 +59,7 @@ internal class ChildStateKeeper(
                     map[key] = value
                 }
 
-                return Holder(SavedState(map))
+                return ValueHolder(SavedState(map))
             }
         }
     }

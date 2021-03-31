@@ -1,5 +1,6 @@
 package com.arkivanov.decompose.statekeeper
 
+import kotlinx.cinterop.ExportObjCClass
 import platform.Foundation.*
 
 actual typealias NSObject = platform.darwin.NSObject
@@ -21,18 +22,20 @@ actual fun NSCoder.encodeBool_(value: Boolean, forKey: String) {
 actual fun NSCoder.decodeBoolForKey_(key: String): Boolean = decodeBoolForKey(key)
 
 actual fun NSCoder.encodeString(value: String, forKey: String) {
-    encodeObject(value as NSData, forKey)
+    encodeObject((value as NSString).dataUsingEncoding(NSUTF8StringEncoding)!!, forKey)
 }
 
 actual fun NSCoder.decodeStringForKey(key: String): String =
-    decodeObject() as String
+    NSString.create(decodeObjectForKey(key) as NSData, NSUTF8StringEncoding) as String
 
 actual fun NSCoder.encodeParcelable(value: Parcelable?, forKey: String) {
     encodeObject(value?.asHolder(), forKey)
 }
 
 actual fun <T: Parcelable> NSCoder.decodeParcelable(key: String): T? =
-    (decodeObjectForKey(key) as ParcelableHolder?)?.value as T?
+    (decodeObjectForKey(key) as ValueHolder?)?.value as T?
+
+actual typealias ExportObjCClass = ExportObjCClass
 
 //data class MyClass(
 //    val some: Int

@@ -2,12 +2,7 @@ package com.arkivanov.decompose.statekeeper
 
 interface Parcelable {
 
-    fun asHolder(): ParcelableHolder
-}
-
-interface ParcelableHolder : NSCodingProtocol {
-
-    val value: Parcelable
+    fun asHolder(): NSCodingProtocol
 }
 
 expect open class NSObject()
@@ -29,6 +24,8 @@ expect fun NSCoder.decodeStringForKey(key: String): String
 expect fun NSCoder.encodeParcelable(value: Parcelable?, forKey: String)
 expect fun <T: Parcelable> NSCoder.decodeParcelable(key: String): T?
 
+expect annotation class ExportObjCClass(val name: String)
+
 fun NSCoder.encodeParcelableList(value: List<Parcelable>, forKey: String) {
     encodeInt_(value.size, "$forKey-size")
     value.forEachIndexed { index, t ->
@@ -42,3 +39,12 @@ fun <T : Parcelable> NSCoder.decodeParcelableList(key: String): List<T> {
     return List(size) { decodeParcelable("$key-$it")!! }
 }
 
+@ExportObjCClass("Holder5") class ValueHolder(val value: Parcelable): NSObject(), NSCodingProtocol {
+    override fun encodeWithCoder(coder: NSCoder) {
+    }
+
+    override fun initWithCoder(coder: NSCoder): NSCodingProtocol? = null
+}
+
+fun getValue(coder: NSCoder, key: String): ParcelableContainer =
+    coder.decodeParcelable(key)!!

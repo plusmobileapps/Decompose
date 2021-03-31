@@ -67,16 +67,16 @@ internal class CounterInnerComponent(
 
     @Parcelize
     private data class ChildConfiguration(val index: Int, val isBackEnabled: Boolean) : Parcelable {
-        override fun asHolder(): ParcelableHolder = Holder(this)
+        override fun asHolder(): NSCodingProtocol = Holder(this)
 
-        private class Holder(override val value: ChildConfiguration) : NSObject(), ParcelableHolder {
+        @ExportObjCClass("Holder2")  private class Holder(private val value: ChildConfiguration) : NSObject(), NSCodingProtocol {
             override fun encodeWithCoder(coder: NSCoder) {
                 coder.encodeInt_(value.index, "index")
                 coder.encodeBool_(value.isBackEnabled, "isBackEnabled")
             }
 
-            override fun initWithCoder(coder: NSCoder): Holder =
-                Holder(
+            override fun initWithCoder(coder: NSCoder): ValueHolder =
+                ValueHolder(
                     ChildConfiguration(
                         index = coder.decodeIntForKey_("index"),
                         isBackEnabled = coder.decodeBoolForKey_("isBackEnabled")

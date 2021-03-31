@@ -10,29 +10,30 @@ import SwiftUI
 import Counter
 
 struct ContentView: View {
-    @State
-    private var componentHolder = ComponentHolder(factory: CounterRootComponent.init)
-    
+    var component: CounterRootComponent
+
     var body: some View {
-        CounterRootView(componentHolder.component)
-            .onAppear { LifecycleRegistryExtKt.resume(self.componentHolder.lifecycle) }
-            .onDisappear { LifecycleRegistryExtKt.stop(self.componentHolder.lifecycle) }
+        CounterRootView(component)
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-    }
-}
+//struct ContentView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ContentView(stateKeeper: nil)
+//    }
+//}
 
 class ComponentHolder<T> {
     let lifecycle: LifecycleRegistry
     let component: T
     
-    init(factory: (ComponentContext) -> T) {
+    init(stateKeeper: StateKeeper?, factory: (ComponentContext) -> T) {
         let lifecycle = LifecycleRegistryKt.LifecycleRegistry()
-        let component = factory(DefaultComponentContext(lifecycle: lifecycle))
+        let component =
+            factory(
+                DefaultComponentContext(lifecycle: lifecycle, stateKeeper: stateKeeper, instanceKeeper:nil, backPressedDispatcher: nil
+                    )
+            )
         self.lifecycle = lifecycle
         self.component = component
 

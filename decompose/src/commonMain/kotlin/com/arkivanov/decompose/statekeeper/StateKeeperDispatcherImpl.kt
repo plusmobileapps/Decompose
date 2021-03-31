@@ -33,9 +33,9 @@ internal class StateKeeperDispatcherImpl(savedState: ParcelableContainer?) : Sta
     private class SavedState(
         val map: HashMap<String, ParcelableContainer>
     ) : Parcelable {
-        override fun asHolder(): ParcelableHolder = Holder(this)
+        override fun asHolder(): NSCodingProtocol = Holder(this)
 
-        private class Holder(override val value: SavedState): NSObject(), ParcelableHolder {
+        @ExportObjCClass("Holder9") private class Holder(private val value: SavedState): NSObject(), NSCodingProtocol {
             override fun encodeWithCoder(coder: NSCoder) {
                 coder.encodeInt_(value.map.size, "size")
                 value.map.entries.forEachIndexed { index, entry ->
@@ -44,7 +44,7 @@ internal class StateKeeperDispatcherImpl(savedState: ParcelableContainer?) : Sta
                 }
             }
 
-            override fun initWithCoder(coder: NSCoder): Holder {
+            override fun initWithCoder(coder: NSCoder): ValueHolder {
                 val size = coder.decodeIntForKey_("size")
                 val map = HashMap<String, ParcelableContainer>()
                 repeat(size) {
@@ -53,7 +53,7 @@ internal class StateKeeperDispatcherImpl(savedState: ParcelableContainer?) : Sta
                     map[key] = value
                 }
 
-                return Holder(SavedState(map))
+                return ValueHolder(SavedState(map))
             }
         }
     }

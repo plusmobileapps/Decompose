@@ -54,16 +54,16 @@ internal class StackSaverImpl<C : Parcelable>(
         val active: SavedEntry,
         val backStack: List<SavedEntry>
     ) : Parcelable {
-        override fun asHolder(): ParcelableHolder = Holder(this)
+        override fun asHolder(): NSCodingProtocol = Holder(this)
 
-        private class Holder(override val value: SavedState): NSObject(), ParcelableHolder {
+        @ExportObjCClass("Holder7") private class Holder(private val value: SavedState): NSObject(), NSCodingProtocol {
             override fun encodeWithCoder(coder: NSCoder) {
                 coder.encodeParcelable(value.active, "active")
                 coder.encodeParcelableList(value.backStack, "backStack")
             }
 
-            override fun initWithCoder(coder: NSCoder): Holder? =
-                Holder(
+            override fun initWithCoder(coder: NSCoder): ValueHolder =
+                ValueHolder(
                     SavedState(
                         active = coder.decodeParcelable("active")!!,
                         backStack = coder.decodeParcelableList("backStack")
@@ -77,16 +77,16 @@ internal class StackSaverImpl<C : Parcelable>(
         val configuration: ParcelableContainer,
         val savedState: ParcelableContainer?
     ) : Parcelable {
-        override fun asHolder(): ParcelableHolder = Holder(this)
+        override fun asHolder(): NSCodingProtocol = Holder(this)
 
-        private class Holder(override val value: SavedEntry): NSObject(), ParcelableHolder {
+        @ExportObjCClass("Holder8") private class Holder(private val value: SavedEntry): NSObject(), NSCodingProtocol {
             override fun encodeWithCoder(coder: NSCoder) {
                 coder.encodeParcelable(value.configuration, "configuration")
                 coder.encodeParcelable(value.savedState, "savedState")
             }
 
-            override fun initWithCoder(coder: NSCoder): Holder? =
-                Holder(
+            override fun initWithCoder(coder: NSCoder): ValueHolder =
+                ValueHolder(
                     SavedEntry(
                         configuration = coder.decodeParcelable("configuration")!!,
                         savedState = coder.decodeParcelable("savedState")

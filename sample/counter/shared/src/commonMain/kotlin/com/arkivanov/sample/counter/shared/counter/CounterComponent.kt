@@ -45,16 +45,16 @@ class CounterComponent(
         val index: Int,
         val count: Int = 0
     ) : Parcelable {
-        override fun asHolder(): ParcelableHolder = Holder(this)
+        override fun asHolder(): NSCodingProtocol = Holder(this)
 
-        private class Holder(override val value: State) : ParcelableHolder() {
+        @ExportObjCClass("Holder3") private class Holder(private val value: State) : NSObject(), NSCodingProtocol {
             override fun encodeWithCoder(coder: NSCoder) {
                 coder.encodeInt_(value.index, "index")
                 coder.encodeInt_(value.count, "count")
             }
 
-            override fun initWithCoder(coder: NSCoder): Holder =
-                Holder(
+            override fun initWithCoder(coder: NSCoder): ValueHolder =
+                ValueHolder(
                     State(
                         index = coder.decodeIntForKey_("index"),
                         count = coder.decodeIntForKey_("count")

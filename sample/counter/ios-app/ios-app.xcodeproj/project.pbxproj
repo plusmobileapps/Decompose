@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1F8C7F8E26151F0C00B46737 /* MyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8C7F8D26151F0C00B46737 /* MyApp.swift */; };
 		DC23136D250FF73A00BBC24B /* Counter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC23136C250FF73A00BBC24B /* Counter.framework */; };
 		DC23136E250FF73A00BBC24B /* Counter.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DC23136C250FF73A00BBC24B /* Counter.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		DC95F2A2255320EE002EDDEA /* SimpleRouterState.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC95F2A1255320EE002EDDEA /* SimpleRouterState.swift */; };
@@ -15,7 +16,6 @@
 		DCA58043250CFEF0002AFAEA /* CounterRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA58042250CFEF0002AFAEA /* CounterRootView.swift */; };
 		DCA58045250D0B4D002AFAEA /* MutableStateBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA58044250D0B4D002AFAEA /* MutableStateBuilder.swift */; };
 		DCD1E12E250C359700F8C914 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD1E12D250C359700F8C914 /* AppDelegate.swift */; };
-		DCD1E130250C359700F8C914 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD1E12F250C359700F8C914 /* SceneDelegate.swift */; };
 		DCD1E132250C359700F8C914 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD1E131250C359700F8C914 /* ContentView.swift */; };
 		DCD1E134250C359A00F8C914 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DCD1E133250C359A00F8C914 /* Assets.xcassets */; };
 		DCD1E137250C359A00F8C914 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DCD1E136250C359A00F8C914 /* Preview Assets.xcassets */; };
@@ -38,6 +38,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1F8C7F8D26151F0C00B46737 /* MyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyApp.swift; sourceTree = "<group>"; };
 		DC23136C250FF73A00BBC24B /* Counter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Counter.framework; path = "../shared/build/xcode-frameworks/Counter.framework"; sourceTree = "<group>"; };
 		DC95F2A1255320EE002EDDEA /* SimpleRouterState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleRouterState.swift; sourceTree = "<group>"; };
 		DCA5803E250CE5BB002AFAEA /* ObservableValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableValue.swift; sourceTree = "<group>"; };
@@ -46,7 +47,6 @@
 		DCA58044250D0B4D002AFAEA /* MutableStateBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MutableStateBuilder.swift; sourceTree = "<group>"; };
 		DCD1E12A250C359700F8C914 /* ios-app.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ios-app.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCD1E12D250C359700F8C914 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		DCD1E12F250C359700F8C914 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		DCD1E131250C359700F8C914 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		DCD1E133250C359A00F8C914 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DCD1E136250C359A00F8C914 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -89,7 +89,6 @@
 			isa = PBXGroup;
 			children = (
 				DCD1E12D250C359700F8C914 /* AppDelegate.swift */,
-				DCD1E12F250C359700F8C914 /* SceneDelegate.swift */,
 				DCD1E131250C359700F8C914 /* ContentView.swift */,
 				DCD1E133250C359A00F8C914 /* Assets.xcassets */,
 				DCD1E138250C359A00F8C914 /* LaunchScreen.storyboard */,
@@ -101,6 +100,7 @@
 				DCA58042250CFEF0002AFAEA /* CounterRootView.swift */,
 				DCA58044250D0B4D002AFAEA /* MutableStateBuilder.swift */,
 				DC95F2A1255320EE002EDDEA /* SimpleRouterState.swift */,
+				1F8C7F8D26151F0C00B46737 /* MyApp.swift */,
 			);
 			path = "ios-app";
 			sourceTree = "<group>";
@@ -218,9 +218,9 @@
 				DCA58043250CFEF0002AFAEA /* CounterRootView.swift in Sources */,
 				DC95F2A2255320EE002EDDEA /* SimpleRouterState.swift in Sources */,
 				DCD1E12E250C359700F8C914 /* AppDelegate.swift in Sources */,
-				DCD1E130250C359700F8C914 /* SceneDelegate.swift in Sources */,
 				DCA58041250CE6B0002AFAEA /* CounterInnerView.swift in Sources */,
 				DCD1E132250C359700F8C914 /* ContentView.swift in Sources */,
+				1F8C7F8E26151F0C00B46737 /* MyApp.swift in Sources */,
 				DCA5803F250CE5BB002AFAEA /* ObservableValue.swift in Sources */,
 				DCA58045250D0B4D002AFAEA /* MutableStateBuilder.swift in Sources */,
 				DCD1E148250C36FD00F8C914 /* CounterView.swift in Sources */,
@@ -291,7 +291,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.7;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -345,7 +345,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.7;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
