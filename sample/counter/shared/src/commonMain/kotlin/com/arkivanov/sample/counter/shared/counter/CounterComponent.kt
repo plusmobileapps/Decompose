@@ -3,9 +3,7 @@ package com.arkivanov.sample.counter.shared.counter
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.instancekeeper.InstanceKeeper
 import com.arkivanov.decompose.instancekeeper.getOrCreate
-import com.arkivanov.decompose.statekeeper.Parcelable
-import com.arkivanov.decompose.statekeeper.Parcelize
-import com.arkivanov.decompose.statekeeper.consume
+import com.arkivanov.decompose.statekeeper.*
 import com.arkivanov.decompose.value.MutableValue
 import com.arkivanov.decompose.value.Value
 import com.arkivanov.decompose.value.operator.map
@@ -46,7 +44,24 @@ class CounterComponent(
     private data class State(
         val index: Int,
         val count: Int = 0
-    ) : Parcelable
+    ) : Parcelable {
+        override fun asHolder(): ParcelableHolder = Holder(this)
+
+        private class Holder(override val value: State) : ParcelableHolder() {
+            override fun encodeWithCoder(coder: NSCoder) {
+                coder.encodeInt_(value.index, "index")
+                coder.encodeInt_(value.count, "count")
+            }
+
+            override fun initWithCoder(coder: NSCoder): Holder =
+                Holder(
+                    State(
+                        index = coder.decodeIntForKey_("index"),
+                        count = coder.decodeIntForKey_("count")
+                    )
+                )
+        }
+    }
 
     private class Handler(initialState: State) : InstanceKeeper.Instance, DisposableScope by DisposableScope() {
         val state = MutableValue(initialState)

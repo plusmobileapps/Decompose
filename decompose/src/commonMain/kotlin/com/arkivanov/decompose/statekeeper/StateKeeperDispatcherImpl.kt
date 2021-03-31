@@ -32,5 +32,29 @@ internal class StateKeeperDispatcherImpl(savedState: ParcelableContainer?) : Sta
     @Parcelize
     private class SavedState(
         val map: HashMap<String, ParcelableContainer>
-    ) : Parcelable
+    ) : Parcelable {
+        override fun asHolder(): ParcelableHolder = Holder(this)
+
+        private class Holder(override val value: SavedState): NSObject(), ParcelableHolder {
+            override fun encodeWithCoder(coder: NSCoder) {
+                coder.encodeInt_(value.map.size, "size")
+                value.map.entries.forEachIndexed { index, entry ->
+                    coder.encodeString(entry.key, "key-$index")
+                    coder.encodeParcelable(entry.value, "value-$index")
+                }
+            }
+
+            override fun initWithCoder(coder: NSCoder): Holder {
+                val size = coder.decodeIntForKey_("size")
+                val map = HashMap<String, ParcelableContainer>()
+                repeat(size) {
+                    val key = coder.decodeStringForKey("key-$it")
+                    val value = coder.decodeParcelable<ParcelableContainer>("value-$it")!!
+                    map[key] = value
+                }
+
+                return Holder(SavedState(map))
+            }
+        }
+    }
 }

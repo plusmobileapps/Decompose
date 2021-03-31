@@ -38,5 +38,29 @@ internal class ChildStateKeeper(
         SavedState(suppliers.mapValuesTo(HashMap()) { it.value() })
 
     @Parcelize
-    private class SavedState(val map: MutableMap<String, Parcelable>) : Parcelable
+    private class SavedState(val map: MutableMap<String, Parcelable>) : Parcelable {
+        override fun asHolder(): ParcelableHolder = Holder(this)
+
+        private class Holder(override val value: SavedState): NSObject(), ParcelableHolder {
+            override fun encodeWithCoder(coder: NSCoder) {
+                coder.encodeInt_(value.map.size, "size")
+                value.map.entries.forEachIndexed { index, entry ->
+                    coder.encodeString(entry.key, "key-$index")
+                    coder.encodeParcelable(entry.value, "value-$index")
+                }
+            }
+
+            override fun initWithCoder(coder: NSCoder): Holder {
+                val size = coder.decodeIntForKey_("size")
+                val map = HashMap<String, Parcelable>()
+                repeat(size) {
+                    val key = coder.decodeStringForKey("key-$it")
+                    val value = coder.decodeParcelable<Parcelable>("value-$it")!!
+                    map[key] = value
+                }
+
+                return Holder(SavedState(map))
+            }
+        }
+    }
 }

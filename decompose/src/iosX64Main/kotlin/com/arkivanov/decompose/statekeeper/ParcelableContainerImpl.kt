@@ -23,15 +23,15 @@ internal actual class ParcelableContainerImpl private constructor(
 
     private class Holder(
         override val value: ParcelableContainerImpl
-    ) : ParcelableHolder() {
+    ) : NSObject(), ParcelableHolder {
         override fun encodeWithCoder(coder: NSCoder) {
-            coder.encodeObject(value.value, "value")
+            coder.encodeParcelable(value.value, "value")
         }
 
         override fun initWithCoder(coder: NSCoder): Holder =
             Holder(
                 ParcelableContainerImpl(
-                    value = coder.decodeObjectForKey("value") as Parcelable?
+                    value = coder.decodeParcelable("value")
                 )
             )
     }

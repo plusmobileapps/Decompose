@@ -1,12 +1,7 @@
 package com.arkivanov.decompose.router
 
 import com.arkivanov.decompose.router.StackSaver.RestoredStack
-import com.arkivanov.decompose.statekeeper.Parcelable
-import com.arkivanov.decompose.statekeeper.ParcelableContainer
-import com.arkivanov.decompose.statekeeper.Parcelize
-import com.arkivanov.decompose.statekeeper.StateKeeper
-import com.arkivanov.decompose.statekeeper.consume
-import com.arkivanov.decompose.statekeeper.consumeRequired
+import com.arkivanov.decompose.statekeeper.*
 import kotlin.reflect.KClass
 
 internal class StackSaverImpl<C : Parcelable>(
@@ -58,11 +53,45 @@ internal class StackSaverImpl<C : Parcelable>(
     private class SavedState(
         val active: SavedEntry,
         val backStack: List<SavedEntry>
-    ) : Parcelable
+    ) : Parcelable {
+        override fun asHolder(): ParcelableHolder = Holder(this)
+
+        private class Holder(override val value: SavedState): NSObject(), ParcelableHolder {
+            override fun encodeWithCoder(coder: NSCoder) {
+                coder.encodeParcelable(value.active, "active")
+                coder.encodeParcelableList(value.backStack, "backStack")
+            }
+
+            override fun initWithCoder(coder: NSCoder): Holder? =
+                Holder(
+                    SavedState(
+                        active = coder.decodeParcelable("active")!!,
+                        backStack = coder.decodeParcelableList("backStack")
+                    )
+                )
+        }
+    }
 
     @Parcelize
     private class SavedEntry(
         val configuration: ParcelableContainer,
         val savedState: ParcelableContainer?
-    ) : Parcelable
+    ) : Parcelable {
+        override fun asHolder(): ParcelableHolder = Holder(this)
+
+        private class Holder(override val value: SavedEntry): NSObject(), ParcelableHolder {
+            override fun encodeWithCoder(coder: NSCoder) {
+                coder.encodeParcelable(value.configuration, "configuration")
+                coder.encodeParcelable(value.savedState, "savedState")
+            }
+
+            override fun initWithCoder(coder: NSCoder): Holder? =
+                Holder(
+                    SavedEntry(
+                        configuration = coder.decodeParcelable("configuration")!!,
+                        savedState = coder.decodeParcelable("savedState")
+                    )
+                )
+        }
+    }
 }
