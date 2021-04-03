@@ -1,4 +1,4 @@
-package com.arkivanov.decompose.router.statekeeper
+package com.arkivanov.decompose.statekeeper
 
 import com.arkivanov.decompose.statekeeper.ChildStateKeeper
 import kotlin.test.Test

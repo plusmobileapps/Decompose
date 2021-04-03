@@ -1,6 +1,7 @@
 package com.arkivanov.counter.app
 
 import android.os.Bundle
+import android.os.Parcelable
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.Box
@@ -18,6 +19,7 @@ import com.arkivanov.decompose.extensions.android.child
 import com.arkivanov.decompose.extensions.compose.jetpack.rememberRootComponent
 import com.arkivanov.decompose.instancekeeper.InstanceKeeper
 import com.arkivanov.decompose.lifecycle.asDecomposeLifecycle
+import com.arkivanov.decompose.statekeeper.Parcelize
 import com.arkivanov.decompose.statekeeper.StateKeeper
 import com.arkivanov.sample.counter.shared.root.CounterRootComponent
 import com.arkivanov.sample.counter.shared.ui.android.CounterRootView
@@ -82,3 +84,7 @@ class MainActivity : AppCompatActivity() {
         COMPOSE, VIEWS
     }
 }
+@Parcelize
+class Some(
+    val l: List<Number>
+) : Parcelable

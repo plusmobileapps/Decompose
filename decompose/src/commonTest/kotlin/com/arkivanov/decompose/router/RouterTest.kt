@@ -5,7 +5,7 @@ import com.arkivanov.decompose.RouterState
 import com.arkivanov.decompose.backpressed.BackPressedDispatcher
 import com.arkivanov.decompose.instancekeeper.InstanceKeeperDispatcher
 import com.arkivanov.decompose.lifecycle.LifecycleRegistry
-import com.arkivanov.decompose.router.statekeeper.TestStateKeeperDispatcher
+import com.arkivanov.decompose.statekeeper.TestStateKeeperDispatcher
 import com.arkivanov.decompose.statekeeper.Parcelable
 import com.arkivanov.decompose.statekeeper.Parcelize
 import kotlin.test.Test

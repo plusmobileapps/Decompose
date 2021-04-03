@@ -1,3 +1,3 @@
 package com.arkivanov.decompose.statekeeper
 
-actual interface Parcelable
+expect class ParcelableStub() : Parcelable

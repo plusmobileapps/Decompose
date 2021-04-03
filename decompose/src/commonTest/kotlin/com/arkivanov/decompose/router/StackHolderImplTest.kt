@@ -3,8 +3,8 @@ package com.arkivanov.decompose.router
 import com.arkivanov.decompose.backpressed.BackPressedDispatcher
 import com.arkivanov.decompose.instancekeeper.InstanceKeeperDispatcher
 import com.arkivanov.decompose.lifecycle.LifecycleRegistry
-import com.arkivanov.decompose.router.statekeeper.ParcelableStub
-import com.arkivanov.decompose.router.statekeeper.TestStateKeeperDispatcher
+import com.arkivanov.decompose.statekeeper.ParcelableStub
+import com.arkivanov.decompose.statekeeper.TestStateKeeperDispatcher
 import com.arkivanov.decompose.statekeeper.ParcelableContainer
 import com.arkivanov.decompose.statekeeper.consume
 import kotlin.test.Test

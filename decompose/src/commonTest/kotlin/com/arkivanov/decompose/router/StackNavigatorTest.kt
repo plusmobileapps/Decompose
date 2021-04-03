@@ -6,8 +6,8 @@ import com.arkivanov.decompose.lifecycle.Lifecycle
 import com.arkivanov.decompose.lifecycle.LifecycleRegistry
 import com.arkivanov.decompose.lifecycle.create
 import com.arkivanov.decompose.lifecycle.resume
-import com.arkivanov.decompose.router.statekeeper.TestParcelableContainer
-import com.arkivanov.decompose.router.statekeeper.TestStateKeeperDispatcher
+import com.arkivanov.decompose.statekeeper.TestParcelableContainer
+import com.arkivanov.decompose.statekeeper.TestStateKeeperDispatcher
 import com.arkivanov.decompose.statekeeper.ParcelableContainer
 import com.arkivanov.decompose.statekeeper.StateKeeperDispatcher
 import kotlin.test.Test

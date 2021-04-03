@@ -24,12 +24,14 @@ buildscript {
     repositories {
         google()
         jcenter()
+        mavenLocal()
         maven { url "https://maven.pkg.jetbrains.space/public/p/compose/dev" }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:4.2.0-beta04'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "org.jetbrains.compose:compose-gradle-plugin:$compose_jetbrains_version"
+        classpath "com.arkivanov.plugin:gradle-plugin:1.0"
     }
 }
 
@@ -37,6 +39,7 @@ allprojects {
     repositories {
         google()
         jcenter()
+        mavenLocal()
         maven { url "https://maven.pkg.jetbrains.space/public/p/compose/dev" }
         maven { url "https://dl.bintray.com/cfraser/muirwik" }
     }
@@ -441,6 +444,12 @@ void doIfMacosX64Enabled(Closure block) {
 
 void doIfTvosEnabled(Closure block) {
     if (isTargetEnabled(Target.TVOS)) {
+        block()
+    }
+}
+
+void doIfDarwinEnabled(Closure block) {
+    if (isTargetEnabled(Target.IOS) || isTargetEnabled(Target.MACOS_X64) || isTargetEnabled(Target.TVOS)) {
         block()
     }
 }
